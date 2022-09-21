@@ -5,7 +5,7 @@
 <br>
 
 ## Table of Contents
-1. [Recommendation System](#1.-Recommendation-System)
+1. [Recommendation System](#Recommendation-System)
 2. [Problem Description](#2.-Problem-Description)
 3. [Source of Data](#3.-Source-of-Data)
 4. [Goals of This Project](#4.-Goals-of-This-Project)
