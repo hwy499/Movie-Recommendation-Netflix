@@ -5,14 +5,14 @@
 <br>
 
 ## Table of Contents
-1. [Recommendation System](#Recommendation-System)
-2. [Problem Description](#2.-Problem-Description)
+1. [Recommendation System](#1. Recommendation-System)
+2. [Problem Description](#Problem-Description)
 3. [Source of Data](#3.-Source-of-Data)
 4. [Goals of This Project](#4.-Goals-of-This-Project)
 5. [About the Project](#5.-About-the-Project)
 6. [Notebook Details](#6.-Notebook-Details)
 
-## Recommendation System
+## 1. Recommendation System
 A recommendation system is a subclass of Information filtering Systems that seeks to predict the rating or the preference a user might give to an item. In simple words, it is an algorithm that suggests relevant items to users. For example, the system recommends which movie to watch in Netflix website, suggests which product to buy in e-commerce platform, and proposes which people to connect in Linkedin. Almost any business can benefit from a recommendation system, because a good recommendation can increase user’s satisfaction, thus increase profits, loyalty, and decreases churn.
 
 There are two types of recommendation system: content-based filtering and collaborative based filtering. The content-based filtering shows relevant items using the content of the previously searched items by the users. The collaborative-based filtering is based on the interest and preference of other similar users and items. Most of movie recommendation system is collaborative-based filtering which also has two classes: one is user-based collaborative filtering by using the rating of similar users; the other is item-based collaborative filtering using the user's own rating on similar items. 
