@@ -17,7 +17,9 @@ A recommendation system is a subclass of Information filtering Systems that seek
 
 There are two types of recommendation system: content-based filtering and collaborative based filtering. The content-based filtering shows relevant items using the content of the previously searched items by the users. The collaborative-based filtering is based on the interest and preference of other similar users and items. Most of movie recommendation system is collaborative-based filtering which also has two classes: one is user-based collaborative filtering by using the rating of similar users; the other is item-based collaborative filtering using the user's own rating on similar items. 
 
-Implementation of recommender systems is of two types: model-based and memory-based. Model-based approach builds a model of users to learn their preferences and is created using Machine Learning techniques like regression, clustering, classification, etc. Memory-based approach uses the entire user-tiem dataset to generate a recommendation using statistical techniques like Pearson Correlation, Euclidean distance, Cosine Similarity, etc.
+Implementation of recommendation systems is of two types: model-based and memory-based. Model-based approach builds a model of users to learn their preferences and is created using Machine Learning techniques like regression, clustering, classification, etc. Memory-based approach uses the entire user-tiem dataset to generate a recommendation using statistical techniques like Pearson Correlation, Euclidean distance, Cosine Similarity, etc.
+
+Depending on the type of recommendation systems, the matrix used for evaluation is different. Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE) give the average of the difference between actual values and predicted values in a model-based recommendation system. They remove the negative sign by squaring the predictions. RMSE also normalizes the mean result to the same scale and is better at dealing with outliers. Some similarity metrics, like Cosine, Mean Square Difference (MSD), and Pearson, compute the similarity between all pairs of users(or items) in a memory-based recommendation system.
 
 ## Problem Description
 Netflix is all about connecting people to the movies they love. To help customers find those movies, they developed world-class movie recommendation system: CinematchSM. Its job is to predict whether someone will enjoy a movie based on how much they liked or disliked other movies. Netflix use those predictions to make personal movie recommendations based on each customer’s unique tastes. And while Cinematch is doing pretty well, it can always be made better.
@@ -35,30 +37,21 @@ The movie rating files contain over 100 million ratings from 480 thousand random
 
 ## About the Project
 All provided moving rating records (100,480,507 rows) were loaded for exploratory data analysis (EDA), presenting the distribution of ratings, the rating trends over years, months, and weeks, and the density of ratings per user or per movie. 
-Due to the limit of memory and storage, a smaller dataset whose users gave the most rates on most movies was choosen for modelling, with 1000 top rated movies and 10,000 top users. The 12% of the rating records are retained from the whole data. During feature engineering, new features were created and selected based on the dependency. A customized machine learning model was built from scratch that a pipeline in GridSearch was used to tune the parameters and get the best classifier with the minimized RMSE score. Then, a stacking model with the best classifiers (DecisionTreeClassifier, RandomForestClassifier, LogisticRegression) as class 0 classifier and LogisticRegression as class 1 classifier was used to fit the train set and predit on the test set. The model was also interprated by Permutation and Lime. The output was evaluated by the classification report and the RMSE score = 1.39.
 
-Classification Report:
+Due to the limit of memory and storage, a smaller dataset whose users gave the most rates on most movies was choosen for modelling, with 1000 top rated movies and 10,000 top users. The 12% of the rating records are retained from the whole data. 
 
-![image](https://user-images.githubusercontent.com/112957640/191595964-6aac89fe-b0ea-4afd-a759-74b6501ba488.png)
+Matrix factorization techniques are commonly used in a model-based collaborative filtering recommendation system. During machine learning, the SVD algorithm from scikit-Surprise package (source: https://surprise.readthedocs.io/en/stable/index.html) was used for matrix factorization of the recommendation system. SVD decreases the dimensions of the user-movie interaction matrix by using the latent factor which captures the similarity between users and movies. A list of SVD hyperparameters was tuned in GridSearchCV to get the best estimator by minimizing RMSE score. The performance of model was measured on predicting the ratings of an item for a user by RMSE: biased RMSE = 0.7053, unbiased RMSE = 0.7704.
 
-PermutationImportance:
+![image](https://user-images.githubusercontent.com/112957640/192361276-5cf8a5c1-a935-45db-a5c3-c3f84bcc9452.png)
 
-![image](https://user-images.githubusercontent.com/112957640/191596244-1a03ea76-2878-42b1-b000-b0b7ffd33e26.png)
-
-A deep learning model was also applied on the small dataset by using matrix factorization to predict the rating based on user matrix and movie matrix. The model architecture was built on the top of Keras. Embadding layer was used for building user matrix and movie matrix. Dot and Concatenate layers were used for building rating matrix. Dense layers were used for output. Model was compiled with the loss function = 'mean_squared_error', optimizer = Adam, and metrics = RootMeanSquaredError. Model was fit on the train set and valided on the valid set. The predicted result was evaluated by RMSE = 0.80.
+A deep learning model was also applied on the small dataset by using matrix factorization to predict the rating based on a sparse user-movie interaction matrix. The model architecture was built on the top of Keras (source: https://keras.io/api/). Embadding layer was used for building user matrix and movie matrix. Dot and Concatenate layers were used for building rating matrix. Dense layers were used for output. Model was compiled with the loss function = 'mean_squared_error', optimizer = Adam, and metrics = RootMeanSquaredError. Model was fit on the train set and valided on the valid set. The predicted result was evaluated by RMSE = 0.80.
 
 ![image](https://user-images.githubusercontent.com/112957640/191597383-37f61234-0ed2-4af8-9128-9616fe1b59fb.png)
 
 ## Notebook Details
-1. Data Importation
-2. EDA
-3. Machine Learning
-    1. Baseline Model
-    2. Parameter Tuning
-    3. Ensemble
-    4. NN Black Box
-4. Deep Learning
-    1. Data Preprocessing
-    2. Build Model Architecture
-    3. Train Model
-    4. Model Evaluation
+1. Load Data and EDA
+    - All movie rating files with movie_id, user_id, rating, date were loaded with EDA.
+2. Machine Learning
+    - SVD algorithm tuned in GridSearchCV was used.
+3. Deep Learning
+    - Keras architecture network was built.
